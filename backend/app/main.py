@@ -1,12 +1,17 @@
 from fastapi import FastAPI
+from app.core.database import Base, engine
+from app.api.auth import router as auth_router
+
+from app.models.user import User
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="Financial AI Platform",
-    version="1.0.0"
+    title="Financial AI Platform"
 )
+
+app.include_router(auth_router)
 
 @app.get("/")
 def root():
-    return {
-        "message": "Financial AI Backend Running"
-    }
+    return {"message": "Backend Running"}
