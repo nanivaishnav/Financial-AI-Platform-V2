@@ -5,9 +5,11 @@ import Upload from "./pages/Upload";
 import Compare from "./pages/Compare";
 import Chat from "./pages/Chat";
 import Analytics from "./pages/Analytics";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   const token = localStorage.getItem("token");
+    return <AppRoutes />;
 
   return (
     <Routes>
@@ -40,6 +42,7 @@ function App() {
       />
     </Routes>
   );
+  
 }
 
 export default App;
