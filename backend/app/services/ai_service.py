@@ -3,16 +3,19 @@ from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def generate_financial_summary(text: str):
+def extract_financial_kpis(text: str):
     prompt = f"""
-    You are a financial analyst.
+    Extract key financial data from this report.
 
-    Analyze the following financial report and provide:
+    Return ONLY JSON in this format:
 
-    1. Summary
-    2. Key insights
-    3. Risks
-    4. Growth opportunities
+    {{
+      "revenue": number,
+      "profit": number,
+      "expenses": number,
+      "growth_rate": number,
+      "summary": "short summary"
+    }}
 
     Report:
     {text[:3000]}
