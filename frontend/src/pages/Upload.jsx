@@ -1,3 +1,9 @@
+import DashboardLayout from "../layouts/DashboardLayout";
+
 export default function Upload() {
-  return <h1>Upload Reports</h1>;
+  return (
+    <DashboardLayout>
+      <h1>Upload Reports</h1>
+    </DashboardLayout>
+  );
 }
