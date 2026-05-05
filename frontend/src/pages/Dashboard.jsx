@@ -1,18 +1,20 @@
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  return (
-    <>
-      <Navbar />
-      <div className="layout">
-        <Sidebar />
+  const nav = useNavigate();
 
-        <div className="content">
-          <h1>Dashboard</h1>
-          <p>Enterprise Financial Analytics Home</p>
-        </div>
-      </div>
-    </>
+  const logout = () => {
+    localStorage.removeItem("token");
+    nav("/login");
+  };
+
+  return (
+    <div>
+      <h1>Financial AI Dashboard</h1>
+
+      <button onClick={() => nav("/upload")}>Upload</button>
+      <button onClick={() => nav("/reports")}>Reports</button>
+      <button onClick={logout}>Logout</button>
+    </div>
   );
 }
