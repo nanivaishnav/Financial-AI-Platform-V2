@@ -1,40 +1,48 @@
-import DashboardLayout from "../layouts/DashboardLayout";
-import StatCard from "../components/StatCard";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-
-const data = [
-  { name: "Jan", revenue: 400 },
-  { name: "Feb", revenue: 700 },
-  { name: "Mar", revenue: 300 },
-  { name: "Apr", revenue: 900 },
-];
+import { useEffect, useState } from "react";
+import API from "../api";
 
 export default function Dashboard() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // 🔐 Protect route
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/";
+    }
+
+    fetchDashboard();
+  }, []);
+
+  const fetchDashboard = async () => {
+    try {
+      const res = await API.get("/dashboard");
+      setData(res.data);
+    } catch (err) {
+      alert("Failed to fetch dashboard");
+    }
+  };
+
   return (
-    <DashboardLayout>
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <StatCard title="Revenue" value="$12,000" />
-        <StatCard title="Reports" value="34" />
-        <StatCard title="Growth" value="+18%" />
+    <div className="layout">
+      
+      {/* Sidebar */}
+      <div className="sidebar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/upload">Upload</a>
+        <a href="/" onClick={() => localStorage.clear()}>Logout</a>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="revenue" />
-          </LineChart>
-        </ResponsiveContainer>
+      {/* Content */}
+      <div className="content">
+        <h2>Dashboard</h2>
+
+        {data ? (
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
-    </DashboardLayout>
+
+    </div>
   );
 }

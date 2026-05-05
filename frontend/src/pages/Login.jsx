@@ -1,34 +1,33 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import api from "../api/axios";
+import API from "../api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const nav = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
-      const res = await api.post("/login", {
+      const res = await API.post("/auth/login", {
         email,
-        password,
+        password
       });
 
       localStorage.setItem("token", res.data.access_token);
-      nav("/dashboard");
-    } catch {
-      alert("Invalid credentials");
+
+      window.location.href = "/dashboard";
+
+    } catch (err) {
+      alert(err.response?.data?.detail || "Login failed");
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-page">
+      <div className="login-box">
+        <h2>Login</h2>
 
-      <form onSubmit={handleLogin}>
         <input
+          type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -39,10 +38,12 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
-      </form>
+        <button onClick={handleLogin}>Login</button>
 
-      <Link to="/register">Create account</Link>
+        <p>
+          No account? <a href="/register">Register</a>
+        </p>
+      </div>
     </div>
   );
 }
