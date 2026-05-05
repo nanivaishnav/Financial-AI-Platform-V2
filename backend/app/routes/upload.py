@@ -1,22 +1,13 @@
-from fastapi import APIRouter, UploadFile, File, Depends
-import shutil
-import os
-from datetime import datetime
-
-router = APIRouter()
-
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+from app.services.ai_service import analyze_text
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    file_path = f"{UPLOAD_DIR}/{datetime.now().timestamp()}_{file.filename}"
+    content = await file.read()
+    text = content.decode(errors="ignore")
 
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    result = analyze_text(text)
 
     return {
         "filename": file.filename,
-        "path": file_path,
-        "message": "Upload successful"
+        "analysis": result
     }
