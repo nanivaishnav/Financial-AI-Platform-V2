@@ -4,7 +4,7 @@ import os
 
 from app.services.pdf_service import extract_text_from_pdf
 from app.services.ai_service import generate_financial_summary
-
+from app.services.rag_service import create_vector_store
 router = APIRouter()
 
 UPLOAD_DIR = "uploads"
