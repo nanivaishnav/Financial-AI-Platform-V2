@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-<Link to="/chat">AI Chat</Link>
 
 export default function Sidebar() {
   return (
@@ -10,6 +9,8 @@ export default function Sidebar() {
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/upload">Upload</Link>
         <Link to="/reports">Reports</Link>
+        <Link to="/chat">AI Chat</Link>
+
       </nav>
     </div>
   );
