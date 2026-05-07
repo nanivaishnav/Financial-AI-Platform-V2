@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+}
+
+.chat-box {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.user-message {
+  background: #2563eb;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  width: fit-content;
+  margin-left: auto;
+  max-width: 70%;
+}
+
+.bot-message {
+  background: #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  width: fit-content;
+  max-width: 70%;
+}
+
+.chat-input-area {
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-input-area button {
+  padding: 14px 20px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
