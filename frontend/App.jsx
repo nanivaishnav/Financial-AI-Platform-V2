@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 import Upload from "./pages/Upload";
 import Chat from "./pages/Chat";
 
-<Route path="/chat" element={<Chat />} />
 
 function App() {
   return (
@@ -16,6 +15,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/chat" element={<Chat />} />
+
       </Routes>
     </BrowserRouter>
   );
