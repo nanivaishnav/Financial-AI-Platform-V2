@@ -1,51 +1,80 @@
 import { useState } from "react";
-import API from "../api";
+import Layout from "../components/Layout";
 
-export default function Chat() {
-
+function Chat() {
   const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [messages, setMessages] = useState([]);
 
-  const handleAsk = async () => {
+  const sendMessage = async () => {
+    if (!question) return;
+
+    const userMessage = {
+      type: "user",
+      text: question,
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
 
     try {
-
-      const res = await API.post("/chat", {
-        question
+      const response = await fetch("http://127.0.0.1:8000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: question,
+        }),
       });
 
-      setAnswer(res.data.answer);
+      const data = await response.json();
 
-    } catch {
-      alert("Chat failed");
+      const botMessage = {
+        type: "bot",
+        text: data.answer,
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+      setQuestion("");
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <div className="content">
+    <Layout>
+      <div className="chat-page">
+        <h1>AI Financial Assistant</h1>
 
-      <h2>Chat With Financial Report</h2>
-
-      <textarea
-        rows="4"
-        placeholder="Ask financial questions..."
-        onChange={(e) => setQuestion(e.target.value)}
-      />
-
-      <br /><br />
-
-      <button onClick={handleAsk}>
-        Ask AI
-      </button>
-
-      {answer && (
-        <div style={{ marginTop: "30px" }}>
-          <h3>AI Answer</h3>
-
-          <pre>{answer}</pre>
+        <div className="chat-box">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={
+                msg.type === "user"
+                  ? "user-message"
+                  : "bot-message"
+              }
+            >
+              {msg.text}
+            </div>
+          ))}
         </div>
-      )}
 
-    </div>
+        <div className="chat-input-area">
+          <input
+            type="text"
+            placeholder="Ask financial questions..."
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+
+          <button onClick={sendMessage}>
+            Send
+          </button>
+        </div>
+      </div>
+    </Layout>
   );
 }
+
+export default Chat;
