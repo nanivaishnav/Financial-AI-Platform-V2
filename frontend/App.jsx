@@ -4,6 +4,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Upload from "./pages/Upload";
+import Chat from "./pages/Chat";
+
+<Route path="/chat" element={<Chat />} />
 
 function App() {
   return (
