@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+<Link to="/chat">AI Chat</Link>
 
 export default function Sidebar() {
   return (
