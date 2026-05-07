@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes import chat
 
 # IMPORT ROUTES
 from app.routes import upload
 
 app = FastAPI()
+app.include_router(chat.router, prefix="/chat", tags=["Chat"])
 
 # CORS CONFIG
 origins = [
